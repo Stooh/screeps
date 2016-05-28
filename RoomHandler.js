@@ -3,6 +3,7 @@ var CreepFactory = require('CreepFactory');
 var PopulationManager = require('PopulationManager');
 var Hive = require('Hive');
 var RoomCache = require('RoomCache');
+var Constructions = require('Constructions');
 
 /** @param Room room */
 function RoomHandler(room) {
@@ -12,6 +13,7 @@ function RoomHandler(room) {
     this.populations = new Populations(this);
     this.creepFactory = new CreepFactory(this);
     this.populationMgr = new PopulationManager(this);
+    this.constructions = new Constructions(this);
 }
 
 RoomHandler.prototype.run = function() {
@@ -26,6 +28,8 @@ RoomHandler.prototype.run = function() {
     }
 
     this.hive.run();
+
+    this.constructions.run();
 }
 
 module.exports = RoomHandler;
