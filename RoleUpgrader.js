@@ -1,7 +1,7 @@
 var RoleUpgrader = {};
 
 /** @param Creep creep */
-RoleUpgrader.run = function(creep, roomCache) {
+RoleUpgrader.run = function(creep, roomHandler) {    
     var controller = creep.room.controller;
     if(creep.carry.energy == 0) {
         if(!creep.pos.isNearTo(controller))

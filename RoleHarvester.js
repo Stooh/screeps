@@ -1,18 +1,19 @@
 var RoleHarvester = {};
 
 /** @param Room room */
-RoleHarvester.runRoom = function(room, roomCache) {
+RoleHarvester.runRoom = function(roomHandler) {
+    var roomCache = roomHandler.cache;
     var creeps = roomCache.myCreepsHarvester();
-    
+
     var sources = roomCache.sources();
     if(sources.length <= 0) {
         console.log('no source');
         return;
     }
-    
+
     for(var i = 0; i < creeps.length; ++i) {
         var creep = creeps[i];
-        
+
         if(!creep.memory.targetSource) {
             var r = Math.floor(Math.random()*sources.length);
             creep.memory.targetSource = sources[r].id;
@@ -21,7 +22,7 @@ RoleHarvester.runRoom = function(room, roomCache) {
 }
 
 /** @param Creep creep */
-RoleHarvester.run = function(creep, roomCache) {
+RoleHarvester.run = function(creep, roomHandler) {
     var target = Game.getObjectById(creep.memory.targetSource);
     if(!target)
         return;
@@ -32,7 +33,7 @@ RoleHarvester.run = function(creep, roomCache) {
     }
     if(creep.carry.energy < creep.carryCapacity) {
         return;
-        var sources = creep.room.find(FIND_SOURCES);
+        var sources = roomHandler.cache.sources();
         if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
             creep.moveTo(sources[0]);
         }

@@ -8,10 +8,10 @@ var RoomCache = require('RoomCache');
 function RoomHandler(room) {
     this.room = room;
     this.cache = new RoomCache(room);
-    this.populations = new Populations(room, this.cache);
-    this.populationMgr = new PopulationManager(room);
-    this.creepFactory = new CreepFactory(room);
-    this.hive = new Hive();
+    this.hive = new Hive(this);
+    this.populations = new Populations(this);
+    this.creepFactory = new CreepFactory(this);
+    this.populationMgr = new PopulationManager(this);
 }
 
 RoomHandler.prototype.run = function() {
@@ -19,13 +19,13 @@ RoomHandler.prototype.run = function() {
 
     this.populations.update();
 
-    var toBuild = this.populationMgr.manage(this.room, this.cache, this.populations.values());
+    var toBuild = this.populationMgr.manage();
 
     for(var n in toBuild) {
         this.creepFactory.createCreep(n, toBuild[n]);
     }
 
-    this.hive.run(this.room, this.cache);
+    this.hive.run();
 }
 
 module.exports = RoomHandler;

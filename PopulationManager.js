@@ -27,16 +27,18 @@ const WANTED_POPULATION = {
 };
 
 /** @param Room room */
-function PopulationManager(room) {
-    this.room = room;
+function PopulationManager(roomHandler) {
+    this.room = roomHandler.room;
+    this.roomCache = roomHandler.cache;
+    this.populations = roomHandler.populations;
     this.memory = HelperFunctions.createMemory('populationMgr', room);
 }
 
-PopulationManager.prototype.calculateWanted = function(room, roomCache) {
+PopulationManager.prototype.calculateWanted = function() {
     if(!HelperFunctions.outdated(this, REFRESH_DELAY))
         return;
 
-    var sourceCount = roomCache.sources().length;
+    var sourceCount = this.roomCache.sources().length;
 
     var res = {};
 
@@ -58,14 +60,15 @@ PopulationManager.prototype.calculateWanted = function(room, roomCache) {
     return res;
 }
 
-PopulationManager.prototype.getWanted = function(room, roomCache) {
-    this.calculateWanted(room, roomCache);
+PopulationManager.prototype.getWanted = function() {
+    this.calculateWanted();
 
     return this.memory.wanted;
 }
 
-PopulationManager.prototype.manage = function(room, roomCache, populations) {
-    var wanteds = this.getWanted(room, roomCache, populations);
+PopulationManager.prototype.manage = function() {
+    var populations = this.populations.values();
+    var wanteds = this.getWanted();
 
     var best = undefined;
     var bestCount = 0;

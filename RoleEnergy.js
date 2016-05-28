@@ -7,17 +7,18 @@ RoleEnergy.runWorld = function() {
 }
 
 /** @param Room room */
-RoleEnergy.runRoom = function(room, roomCache) {
+RoleEnergy.runRoom = function(roomHandler) {
+    var roomCache = roomHandler.cache;
     var creeps = roomCache.myCreepsEnergy();
     var sources = roomCache.myCreepsHarvester();
     if(sources.length <= 0) {
         console.log('no harvester');
         return;
     }
-    
+
     for(var i = 0; i < creeps.length; ++i) {
         var creep = creeps[i];
-        
+
         if(!creep.memory.targetSource) {
             var r = Math.floor(Math.random()*sources.length);
             creep.memory.targetSource = sources[r].id;
@@ -26,7 +27,7 @@ RoleEnergy.runRoom = function(room, roomCache) {
 }
 
 /** @param Creep creep */
-RoleEnergy.run = function(creep, roomCache) {
+RoleEnergy.run = function(creep, roomHandler) {
     if(creep.carry.energy < creep.carryCapacity) {
         var source = Game.getObjectById(creep.memory.targetSource);
         if(!source)
@@ -40,8 +41,8 @@ RoleEnergy.run = function(creep, roomCache) {
                     return creep.memory.role != ROLE_ENERGY && creep.carry.energy < creep.carryCapacity;
                 }
         });*/
-        var targets = roomCache.needsEnergyTransfer();
-        
+        var targets = roomHandler.cache.needsEnergyTransfer();
+
         /*creep.room.find(FIND_CREEPS, {
                 filter: (creep) => {
                     return creep.needsEnergyTransfer(); //memory.role != ROLE_ENERGY && creep.carry.energy < creep.carryCapacity;

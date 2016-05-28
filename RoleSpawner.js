@@ -1,7 +1,9 @@
 var RoleSpawner = {};
 
 /** @param Creep creep */
-RoleSpawner.run = function(creep, roomCache) {
+RoleSpawner.run = function(creep, roomHandler) {
+    var roomCache = roomHandler.cache;
+    
     // on veut faire au plus vite au plus court pour "lancer la machine"
     if(creep.carry.energy < creep.carryCapacity) {
         var target = creep.pos.findClosestByRange(roomCache.activeSources());

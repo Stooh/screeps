@@ -1,22 +1,26 @@
 const ROLES = require('Roles');
 
-function Hive() {
+/** @param Room room */
+function Hive(roomHandler) {
+    this.roomHandler = roomHandler;
+    this.room = roomHandler.room;
+    this.roomCache = roomHandler.cache;
 }
 
 /** @param Room room */
-Hive.prototype.run = function(room, roomCache) {
-    var creeps = roomCache.myCreeps();
-    
+Hive.prototype.run = function() {
+    var creeps = this.roomCache.myCreeps();
+
     for(var r in ROLES) {
         var role = ROLES[r];
-        role.runRoom(room, roomCache);
+        role.runRoom(this.roomHandler);
     }
-    
+
     for(var i = 0; i < creeps.length; ++i) {
         var creep = creeps[i];
         var role = ROLES[creep.memory.role];
         if(role)
-            role.run(creep, roomCache);
+            role.run(creep, this.roomHandler);
     }
 }
 
