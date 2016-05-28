@@ -10,7 +10,7 @@ const WANTED_POPULATION = {
     },
 
     upgrader: {
-      max: 5,
+      max: 3,
       cost: 100,
     },
 
@@ -24,6 +24,11 @@ const WANTED_POPULATION = {
         min:1,
         max:20,
         cost: 90,
+    },
+
+    builder: {
+        max: 10,
+        cost: 150,
     },
 };
 
