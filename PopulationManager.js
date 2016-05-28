@@ -15,6 +15,7 @@ const WANTED_POPULATION = {
     },
 
     harvester: {
+        min: 1,
         maxSource: 2,
         cost: 60
     },
@@ -31,7 +32,7 @@ function PopulationManager(roomHandler) {
     this.room = roomHandler.room;
     this.roomCache = roomHandler.cache;
     this.populations = roomHandler.populations;
-    this.memory = HelperFunctions.createMemory('populationMgr', room);
+    this.memory = HelperFunctions.createMemory('populationMgr', this.room);
 }
 
 PopulationManager.prototype.calculateWanted = function() {
