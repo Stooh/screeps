@@ -20,7 +20,7 @@ Constructions.prototype.buildRoads = function() {
     for(var pos in pathUse) {
         if(pathUse[pos] >= minPathUse) {
             var p = HelperFunctions.intToPos(pos);
-            if(canBuildRoad(room, p))
+            if(!canBuildRoad(room, p))
                 continue;
             room.createConstructionSite(p.x, p.y, STRUCTURE_ROAD);
         }
@@ -29,14 +29,14 @@ Constructions.prototype.buildRoads = function() {
 
 function canBuildRoad(room, p) {
     var structures = room.lookForAt(LOOK_STRUCTURES, p.x, p.y)
-    if(structures.length)
-        return true;
+    if(structures.length > 0)
+        return false;
 
     var constructions = room.lookForAt(LOOK_CONSTRUCTION_SITES, p.x, p.y);
-    if(constructions.length)
-        return true;
+    if(constructions.length > 0)
+        return false;
 
-    return false;
+    return true;
 }
 
 Constructions.prototype.updatePathUse = function() {
@@ -46,10 +46,8 @@ Constructions.prototype.updatePathUse = function() {
         var creep = creeps[i];
 
         var p = HelperFunctions.posToInt(creep.pos);
-        if(!p in pathUse)
-            pathUse[p] = 1;
-        else
-            pathUse[p]++;
+        var old = pathUse[p];
+        pathUse[p] = old ? (old + 1) : 1;
     }
 }
 
