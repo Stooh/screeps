@@ -9,22 +9,22 @@ function RoomHandler(room) {
     this.room = room;
     this.cache = new RoomCache(room);
     this.populations = new Populations(room, this.cache);
-    this.populationMgr = new PopulationManager();
+    this.populationMgr = new PopulationManager(room);
     this.creepFactory = new CreepFactory(room);
     this.hive = new Hive();
 }
 
 RoomHandler.prototype.run = function() {
     this.cache.clear();
-    
+
     this.populations.update();
-    
-    var toBuild = this.populationMgr.manage(this.room, this.populations.values());
-    
+
+    var toBuild = this.populationMgr.manage(this.room, this.cache, this.populations.values());
+
     for(var n in toBuild) {
         this.creepFactory.createCreep(n, toBuild[n]);
     }
-    
+
     this.hive.run(this.room, this.cache);
 }
 

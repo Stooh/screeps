@@ -8,7 +8,7 @@ HelperFunctions.createMemory = function(label, base) {
         memory[label] = res;
     }
     return res;
-}
+};
 
 HelperFunctions.getOrCreateFromMemory = function(base, label, createCallback = () => ({})) {
     var res = base.memory[label];
