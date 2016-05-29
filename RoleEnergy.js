@@ -32,7 +32,7 @@ RoleEnergy.runRoom = function(roomHandler) {
     if(creeps.length) {
         targets.sort(SORT_ENERGY_SCORE);
         var giverTargets = targets.filter(FILTER_GIVER_TARGET);
-        var takerTargets = targets.filter(GILTER_TAKER_TARGET);
+        var takerTargets = targets.filter(FILTER_TAKER_TARGET);
 
         for(var i = 0; i < creeps.length; ++i) {
             var creep = creeps[i];
@@ -46,6 +46,9 @@ RoleEnergy.runRoom = function(roomHandler) {
                 target = giverTargets.pop();
             }
 
+            if(!target)
+            	continue;
+            
             target.memory.energyTargetedBy = creep.id;
             creep.memory.target = target.id;
         }

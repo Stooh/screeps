@@ -6,7 +6,7 @@ RoleFighter.act = function(creep, roomHandler) {
     if(RoleFighter.attackHostiles(creep, roomHandler)) { return; }
     if(RoleFighter.attackSpawns(creep, roomHandler)) { return; }
 
-    this.creep.moveTo(25,25); //, {avoid: avoidArea});
+    creep.moveTo(25,25); //, {avoid: avoidArea});
 }
 
 RoleFighter.attackHostiles = function(creep, roomHandler) {
