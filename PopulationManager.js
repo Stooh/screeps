@@ -17,18 +17,23 @@ const WANTED_POPULATION = {
     harvester: {
         min: 1,
         maxSource: 2,
-        cost: 60
+        cost: 90
     },
 
     energy: {
         min:1,
         max:20,
-        cost: 90,
+        cost: 60,
     },
 
     builder: {
         max: 10,
         cost: 150,
+    },
+
+    fighter: {
+        max: 10,
+        cost: 75,
     },
 };
 

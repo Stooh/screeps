@@ -10,6 +10,8 @@ function createCacheFunction(label, runnable) {
 
 var caches = [
     {name: 'myCreeps', runnable: (room) => (room.find(FIND_MY_CREEPS))},
+    {name: 'hostileCreeps', runnable: (room) => (room.find(FIND_HOSTILE_CREEPS).filter(t => t.name != 'Source Keeper'))},
+    {name: 'hostileSpawns', runnable: (room) => ( room.find(FIND_HOSTILE_SPAWNS))},
     {name: 'myStructs', runnable: (room) => (room.find(FIND_MY_STRUCTURES))},
     {name: 'mySpawns', runnable: (room) => (room.find(FIND_MY_SPAWNS))},
     {name: 'sources', runnable: (room) => (room.find(FIND_SOURCES))},

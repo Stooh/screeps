@@ -4,6 +4,7 @@ var RoleUpgrader = require('RoleUpgrader');
 var RoleEnergy = require('RoleEnergy');
 var RoleSpawner = require('RoleSpawner');
 var RoleBuilder = require('RoleBuilder');
+var RoleFighter = require('RoleFighter');
 
 const ROLES = {
     none: new Role('none', [], () => {}),
@@ -12,6 +13,7 @@ const ROLES = {
     energy: new Role('energy', [CARRY, CARRY, MOVE, MOVE], RoleEnergy),
     spawner: new Role('spawner', [WORK, CARRY, MOVE], RoleSpawner),
     builder: new Role('builder', [WORK, WORK, CARRY, MOVE], RoleBuilder),
+    fighter: new Role('fighter', [MOVE, MOVE, ATTACK, ATTACK], RoleFighter),
 };
 
 module.exports = ROLES;
