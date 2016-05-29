@@ -3,9 +3,6 @@ var HelperFunctions = {};
 const GARBAGE_DELAY = 30;
 const OBJECT_CREATE_CALLBACK = function() {return {}};
 
-var garbageCollectionMem = {};
-garbageCollectionMem.memory = HelperFunctions.createMemory('garbageCollection');
-
 HelperFunctions.createMemory = function(label, base) {
     var memory = base ? base.memory : Memory;
     var res = memory[label];
@@ -15,6 +12,10 @@ HelperFunctions.createMemory = function(label, base) {
     }
     return res;
 };
+
+// l'objet qui gère si on doit garbage ou pas
+var garbageCollectionMem = {};
+garbageCollectionMem.memory = HelperFunctions.createMemory('garbageCollection');
 
 HelperFunctions.getOrCreateFromMemory = function(base, label, createCallback) {
 	createCallback = createCallback || OBJECT_CREATE_CALLBACK;
