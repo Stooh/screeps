@@ -11,7 +11,15 @@ const FILTER_GIVER_TARGET = function(t) {return t.memory.energyScore > 0 && t.wa
 const FILTER_TAKER_TARGET = function(t) {return t.memory.energyScore > 0 && !t.wantsGiveEnergy();};
 const SORT_ENERGY_SCORE = function(a,b) {return a.memory.energyScore - b.memory.energyScore;};
 
-var RoleEnergy = {};
+var RoleEnergy = {
+    label: 'energy',
+    bodyStructs: [
+        {carry:2, move:2},
+        {carry:5, move:5},
+        {carry:10, move:10},
+        {carry:25, move:25}
+    ],
+};
 
 /** @param Room room */
 RoleEnergy.runWorld = function() {
@@ -48,7 +56,7 @@ RoleEnergy.runRoom = function(roomHandler) {
 
             if(!target)
             	continue;
-            
+
             target.memory.energyTargetedBy = creep.id;
             creep.memory.target = target.id;
         }

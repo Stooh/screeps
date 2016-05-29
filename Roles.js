@@ -5,16 +5,27 @@ var RoleEnergy = require('RoleEnergy');
 var RoleSpawner = require('RoleSpawner');
 var RoleBuilder = require('RoleBuilder');
 var RoleFighter = require('RoleFighter');
-var RoleNone = {};
+var RoleNone = {label: 'none', bodyStructs: []};
 
-const ROLES = {
-    none: new Role('none', [], RoleNone),
-    harvester: new Role('harvester', [WORK, WORK, CARRY, MOVE], RoleHarvester),
-    upgrader: new Role('upgrader', [WORK, WORK, CARRY, MOVE], RoleUpgrader),
-    energy: new Role('energy', [CARRY, CARRY, MOVE, MOVE], RoleEnergy),
-    spawner: new Role('spawner', [WORK, CARRY, MOVE], RoleSpawner),
-    builder: new Role('builder', [WORK, WORK, CARRY, MOVE], RoleBuilder),
-    fighter: new Role('fighter', [MOVE, MOVE, ATTACK, ATTACK], RoleFighter),
-};
+
+function generateRoles() {
+    var res = {};
+
+    [
+        RoleHarvester,
+        RoleUpgrader,
+        RoleEnergy,
+        RoleSpawner,
+        RoleBuilder,
+        RoleFighter,
+    ].forEach(function(r) {
+        var role = new Role(r);
+        res[role.label] = role;
+    });
+
+    return res;
+}
+
+const ROLES = generateRoles();
 
 module.exports = ROLES;

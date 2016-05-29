@@ -1,4 +1,11 @@
-var RoleBuilder = {};
+var RoleBuilder = {
+    label: 'builder',
+    bodyStructs: [
+        {work:2, carry:1, move:1},
+        {work:3, carry:3, move:3},
+        {work:4, carry:4, move:4}
+    ],
+};
 
 function getTarget(creep) {
     var tId = creep.memory.target;
@@ -18,6 +25,7 @@ function choseTargetSite(creep, roomHandler) {
     creep.memory.target = target.id;
     return target;
 }
+
 
 /** @param Creep creep */
 RoleBuilder.run = function(creep, roomHandler) {

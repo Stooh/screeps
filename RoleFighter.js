@@ -1,4 +1,12 @@
-var RoleFighter = {};
+var RoleFighter = {
+    label: 'fighter',
+    bodyStructs: [
+        {move:2, attack:2},
+        {move:4, attack:4},
+        {tough:4, move:10, attack:6},
+        {tough:10, move:25, attack:15}
+    ],
+};
 
 RoleFighter.act = function(creep, roomHandler) {
     //var avoidArea = this.getAvoidedArea();

@@ -2,6 +2,7 @@ const ROLES = require('Roles');
 
 /** @param Room room */
 function CreepFactory(roomHandler) {
+    this.roomHandler = roomHandler;
     this.room = roomHandler.room;
 }
 
@@ -10,10 +11,11 @@ function getBodyFromRole(roleName) {
 
     if(!role) {
         console.log('Unknown role: ' + roleName);
-        return [];
+        return undefined;
     }
 
-    return role.body;
+    // for now only level 1
+    return role.bodies[0].body;
 }
 
 CreepFactory.prototype.createCreep = function(role, count) {
@@ -27,8 +29,10 @@ CreepFactory.prototype.createCreep = function(role, count) {
             var spawn = spawns[i];
 
            // if(spawn.canCreateCreep(body)) {
-                var creep = spawn.createCreep(body, '', {role: role});
+                var creep = spawn.createCreep(body, '');
                 if(creep) {
+                    creep.memory.role = role;
+                    creep.memory.createdAt = Game.time;
                     created = true;
                     break;
                 }
