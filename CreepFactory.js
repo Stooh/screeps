@@ -29,10 +29,8 @@ CreepFactory.prototype.createCreep = function(role, count) {
             var spawn = spawns[i];
 
            // if(spawn.canCreateCreep(body)) {
-                var creep = spawn.createCreep(body, '');
+                var creep = spawn.createCreep(body, '', {role: role});
                 if(creep) {
-                    creep.memory.role = role;
-                    creep.memory.createdAt = Game.time;
                     created = true;
                     break;
                 }
