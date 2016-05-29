@@ -4,7 +4,7 @@ const GARBAGE_DELAY = 30;
 const OBJECT_CREATE_CALLBACK = function() {return {}};
 
 var garbageCollectionMem = {};
-var garbageCollectionMem.memory = HelperFunctions.createMemory('garbageCollection');
+garbageCollectionMem.memory = HelperFunctions.createMemory('garbageCollection');
 
 HelperFunctions.createMemory = function(label, base) {
     var memory = base ? base.memory : Memory;
