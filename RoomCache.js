@@ -16,6 +16,7 @@ var caches = [
     {name: 'constructionSites', runnable: (room) => (room.find(FIND_CONSTRUCTION_SITES))},
     {name: 'activeSources', runnable: (room) => (room.find(FIND_SOURCES_ACTIVE))},
     {name: 'myCreepsAndStructs', runnable: function(room) {return this.myCreeps().concat(this.myStructs());}},
+    {name: 'usesEnergyTransfer', runnable: function(room) {return this.myCreepsAndStructs().filter(v => v.usesEnergyTransfer());}},
     {name: 'needsEnergyTransfer', runnable: function(room) {return this.myCreepsAndStructs().filter(v => v.needsEnergyTransfer());}},
 ];
 caches.forEach(v => { RoomCache.prototype[v.name] = createCacheFunction(v.name, v.runnable); });
