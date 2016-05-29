@@ -58,6 +58,24 @@ function generateBody(parts) {
     return res;
 }
 
+Role.prototype.getMaxExistingBodyLevel = function(bodyStruct) {
+    // we start by checking the highest level first
+    for(var i = this.bodyStructs.length - 1; i >= 0; --i) {
+        var bs = this.bodyStructs[i];
+        var valid = true;
+        for(var r in bs) {
+            if((bodyStruct[r] || 0) < bs[r]) {
+                valid = false;
+                break;
+            }
+        }
+
+        if(valid)
+            return i;
+    }
+    return -1;
+}
+
 /** @param Creep creep */
 Role.prototype.run = function(creep, roomCache) {
     if(this.base.run)
