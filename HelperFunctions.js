@@ -1,6 +1,10 @@
 var HelperFunctions = {};
 
+const GARBAGE_DELAY = 30;
 const OBJECT_CREATE_CALLBACK = function() {return {}};
+
+var garbageCollectionMem = {};
+var garbageCollectionMem.memory = HelperFunctions.createMemory('garbageCollection');
 
 HelperFunctions.createMemory = function(label, base) {
     var memory = base ? base.memory : Memory;
@@ -33,14 +37,24 @@ HelperFunctions.outdated = function(base, delay, label) {
 };
 
 HelperFunctions.garbageCollection =  function() {
-	var counter = 0;
-	for(var n in Memory.creeps) {
-		var c = Game.creeps[n];
-		if(!c) {
+    if(!HelperFunctions.outdated(garbageCollectionMem, GARBAGE_DELAY))
+        return;
+
+	for(var n in Memory.creeps)
+		if(!Game.creeps[n])
 			delete Memory.creeps[n];
-			counter++;
-		}
-	}
+
+    for(var n in Memory.spawns)
+        if(!Game.spawns[n])
+            delete Memory.spawns[n];
+
+    for(var n in Memory.rooms)
+        if(!Game.rooms[n])
+            delete Memory.rooms[n];
+
+    for(var n in Memory.gameObject)
+        if(!Game.getObjectById(n))
+            delete Memory.gameObject[n];
 };
 
 const POS_MUL = 10000;
