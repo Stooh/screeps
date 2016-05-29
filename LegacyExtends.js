@@ -3,6 +3,34 @@ var Rooms = require('Rooms');
 
 var LegacyExtends = {};
 
+[StructureExtension, Source].forEach(
+    function(v) {
+        if(v.prototype.hasOwnProperty('memory'))
+            return;
+
+        Object.defineProperty(v.prototype, 'memory', {
+            get: function() {
+                if(_.isUndefined(Memory.gameObject)) {
+                    Memory.gameObject = {};
+                }
+                if(!_.isObject(Memory.gameObject)) {
+                    return undefined;
+                }
+                return Memory.gameObject[this.id] = Memory.gameObject[this.id] || {};
+            },
+            set: function(value) {
+                if(_.isUndefined(Memory.gameObject)) {
+                    Memory.gameObject = {};
+                }
+                if(!_.isObject(Memory.gameObject)) {
+                    throw new Error('Could not set gameObject memory');
+                }
+                Memory.gameObject[this.id] = value;
+            }
+        })
+    }
+);
+
 Creep.prototype.usesEnergyTransfer = function() {
     return this.memory.role == 'builder' || this.memory.role == 'upgrader' || this.memory.role == 'harvester';
 }
