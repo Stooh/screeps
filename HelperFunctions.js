@@ -1,5 +1,7 @@
 var HelperFunctions = {};
 
+const OBJECT_CREATE_CALLBACK = function() {return {}};
+
 HelperFunctions.createMemory = function(label, base) {
     var memory = base ? base.memory : Memory;
     var res = memory[label];
@@ -10,7 +12,8 @@ HelperFunctions.createMemory = function(label, base) {
     return res;
 };
 
-HelperFunctions.getOrCreateFromMemory = function(base, label, createCallback = () => ({})) {
+HelperFunctions.getOrCreateFromMemory = function(base, label, createCallback) {
+	createCallback = createCallback || OBJECT_CREATE_CALLBACK;
     var res = base.memory[label];
     if(!res) {
         res = createCallback.apply(null, null);
@@ -19,7 +22,8 @@ HelperFunctions.getOrCreateFromMemory = function(base, label, createCallback = (
     return res;
 };
 
-HelperFunctions.outdated = function(base, delay, label = 'lastUpdateTime') {
+HelperFunctions.outdated = function(base, delay, label) {
+	label = label || 'lastUpdateTime';
     var lastUpdate = base.memory[label];
     if(lastUpdate && Game.time - lastUpdate <= delay)
         return false;

@@ -5,9 +5,10 @@ var RoleEnergy = require('RoleEnergy');
 var RoleSpawner = require('RoleSpawner');
 var RoleBuilder = require('RoleBuilder');
 var RoleFighter = require('RoleFighter');
+var RoleNone = {};
 
 const ROLES = {
-    none: new Role('none', [], () => {}),
+    none: new Role('none', [], RoleNone),
     harvester: new Role('harvester', [WORK, WORK, CARRY, MOVE], RoleHarvester),
     upgrader: new Role('upgrader', [WORK, WORK, CARRY, MOVE], RoleUpgrader),
     energy: new Role('energy', [CARRY, CARRY, MOVE, MOVE], RoleEnergy),

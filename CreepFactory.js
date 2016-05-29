@@ -16,7 +16,8 @@ function getBodyFromRole(roleName) {
     return role.body;
 }
 
-CreepFactory.prototype.createCreep = function(role, count = 1) {
+CreepFactory.prototype.createCreep = function(role, count) {
+	count = count || 1;
     var spawns = this.room.find(FIND_MY_SPAWNS);
     var body = getBodyFromRole(role);
 

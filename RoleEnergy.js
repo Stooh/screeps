@@ -6,6 +6,11 @@ const CONSECUTIVE_FULL_SCORE = 200;
 const EMPTY_SCORE = 1000;
 const CONSECUTIVE_EMPTY_SCORE = 200;
 
+const FILTER_IDLE = function(c) {return !c.memory.target};
+const FILTER_GIVER_TARGET = function(t) {return t.memory.energyScore > 0 && t.wantsGiveEnergy();};
+const FILTER_TAKER_TARGET = function(t) {return t.memory.energyScore > 0 && !t.wantsGiveEnergy();};
+const SORT_ENERGY_SCORE = function(a,b) {return a.memory.energyScore - b.memory.energyScore;};
+
 var RoleEnergy = {};
 
 /** @param Room room */
@@ -21,13 +26,13 @@ RoleEnergy.runRoom = function(roomHandler) {
     RoleEnergy.updateEnergyScores(targets);
 
     // on recupere les idle
-    var creeps = roomCache.myCreepsEnergy().filter(c => !c.memory.target);
+    var creeps = roomCache.myCreepsEnergy().filter(FILTER_IDLE);
 
     // on affecte chaque idle au target le plus urgent
     if(creeps.length) {
-        targets.sort((a,b) => a.memory.energyScore - b.memory.energyScore);
-        var giverTargets = targets.filter(t => t.memory.energyScore > 0 && t.wantsGiveEnergy());
-        var takerTargets = targets.filter(t => t.memory.energyScore > 0 && !t.wantsGiveEnergy());
+        targets.sort(SORT_ENERGY_SCORE);
+        var giverTargets = targets.filter(FILTER_GIVER_TARGET);
+        var takerTargets = targets.filter(GILTER_TAKER_TARGET);
 
         for(var i = 0; i < creeps.length; ++i) {
             var creep = creeps[i];

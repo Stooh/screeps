@@ -9,19 +9,19 @@ function createCacheFunction(label, runnable) {
 }
 
 var caches = [
-    {name: 'myCreeps', runnable: (room) => (room.find(FIND_MY_CREEPS))},
-    {name: 'hostileCreeps', runnable: (room) => (room.find(FIND_HOSTILE_CREEPS).filter(t => t.name != 'Source Keeper'))},
-    {name: 'hostileSpawns', runnable: (room) => ( room.find(FIND_HOSTILE_SPAWNS))},
-    {name: 'myStructs', runnable: (room) => (room.find(FIND_MY_STRUCTURES))},
-    {name: 'mySpawns', runnable: (room) => (room.find(FIND_MY_SPAWNS))},
-    {name: 'sources', runnable: (room) => (room.find(FIND_SOURCES))},
-    {name: 'constructionSites', runnable: (room) => (room.find(FIND_CONSTRUCTION_SITES))},
-    {name: 'activeSources', runnable: (room) => (room.find(FIND_SOURCES_ACTIVE))},
+    {name: 'myCreeps', runnable: function(room) {return room.find(FIND_MY_CREEPS)}},
+    {name: 'hostileCreeps', runnable: function(room) {return room.find(FIND_HOSTILE_CREEPS).filter(function(t) {return t.name != 'Source Keeper';});}},
+    {name: 'hostileSpawns', runnable: function(room) {return room.find(FIND_HOSTILE_SPAWNS);}},
+    {name: 'myStructs', runnable: function(room) {return room.find(FIND_MY_STRUCTURES);}},
+    {name: 'mySpawns', runnable: function(room) {return room.find(FIND_MY_SPAWNS);}},
+    {name: 'sources', runnable: function(room) {return room.find(FIND_SOURCES);}},
+    {name: 'constructionSites', runnable: function(room) {return room.find(FIND_CONSTRUCTION_SITES);}},
+    {name: 'activeSources', runnable: function(room) {return room.find(FIND_SOURCES_ACTIVE);}},
     {name: 'myCreepsAndStructs', runnable: function(room) {return this.myCreeps().concat(this.myStructs());}},
-    {name: 'usesEnergyTransfer', runnable: function(room) {return this.myCreepsAndStructs().filter(v => v.usesEnergyTransfer());}},
-    {name: 'needsEnergyTransfer', runnable: function(room) {return this.myCreepsAndStructs().filter(v => v.needsEnergyTransfer());}},
+    {name: 'usesEnergyTransfer', runnable: function(room) {return this.myCreepsAndStructs().filter(function(v) {return v.usesEnergyTransfer();});}},
+    {name: 'needsEnergyTransfer', runnable: function(room) {return this.myCreepsAndStructs().filter(function(v) {return v.needsEnergyTransfer();});}},
 ];
-caches.forEach(v => { RoomCache.prototype[v.name] = createCacheFunction(v.name, v.runnable); });
+caches.forEach(function(v) { RoomCache.prototype[v.name] = createCacheFunction(v.name, v.runnable); });
 
 function createCacheRoleFunction(role) {
     var name = 'myCreeps' + role.capLabel;
