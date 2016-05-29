@@ -3,7 +3,7 @@ var Rooms = require('Rooms');
 
 var LegacyExtends = {};
 
-[StructureExtension, Source].forEach(
+[StructureExtension, Source, ConstructionSite].forEach(
     function(v) {
         if(v.prototype.hasOwnProperty('memory'))
             return;
