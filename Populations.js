@@ -1,7 +1,5 @@
 var HelperFunctions = require('HelperFunctions');
 
-const REFRESH_DELAY = 5;
-
 /** @param {Room} room **/
 function Populations(roomHandler) {
     this.room = roomHandler.room;
