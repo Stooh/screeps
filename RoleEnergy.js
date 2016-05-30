@@ -1,3 +1,5 @@
+var HelperFunctions = require('HelperFunctions');
+
 const ROLE_ENERGY = 'energy';
 
 const FULL_SCORE = 1000;
@@ -6,13 +8,15 @@ const CONSECUTIVE_FULL_SCORE = 200;
 const EMPTY_SCORE = 1000;
 const CONSECUTIVE_EMPTY_SCORE = 200;
 
+const TARGETED_BY_CHECK_DELAY = 10;
+
 const FILTER_IDLE = function(c) {return !c.memory.target};
 const FILTER_GIVER_TARGET = function(t) {return t.memory.energyScore > 0 && t.wantsGiveEnergy();};
 const FILTER_TAKER_TARGET = function(t) {return t.memory.energyScore > 0 && !t.wantsGiveEnergy();};
 const SORT_ENERGY_SCORE = function(a,b) {return a.memory.energyScore - b.memory.energyScore;};
 
 var RoleEnergy = {
-    label: 'energy',
+    label: ROLE_ENERGY,
     bodyStructs: [
         {carry:2, move:2},
         {carry:5, move:5},
@@ -38,6 +42,7 @@ RoleEnergy.runRoom = function(roomHandler) {
 
     // on affecte chaque idle au target le plus urgent
     if(creeps.length) {
+        // TODO : sort w/ distance for every creep. We probably have only one idle at a time anyway
         targets.sort(SORT_ENERGY_SCORE);
         var giverTargets = targets.filter(FILTER_GIVER_TARGET);
         var takerTargets = targets.filter(FILTER_TAKER_TARGET);
@@ -58,6 +63,7 @@ RoleEnergy.runRoom = function(roomHandler) {
             	continue;
 
             target.memory.energyTargetedBy = creep.id;
+            target.memory.energyTargetedByLastCheck = Game.time;
             creep.memory.target = target.id;
         }
     }
@@ -67,11 +73,21 @@ RoleEnergy.updateEnergyScores = function(targets) {
     for(var i = 0; i < targets.length; ++i) {
         var target = targets[i];
 
-        // S'il est deja targeted...
-        // TODO check de temps à autre que le targeter est valide
+        // If already targeted. ignore
         if(target.memory.energyTargetedBy) {
-            target.memory.energyScore = 0;
-            continue;
+            // we check from time to time that the targeting creep is still valid
+            if(HelperFunctions.outdated(target, TARGETED_BY_CHECK_DELAY, 'energyTargetedByLastCheck')) {
+                var creep = Game.getObjectById(target.memory.energyTargetedBy);
+                if(!creep || !creep.memory || !creep.memory.role == ROLE_ENERGY) {
+                    delete target.memory.energyTargetedBy;
+                } else {
+                    target.memory.energyScore = 0;
+                    continue;
+                }
+            } else {
+                target.memory.energyScore = 0;
+                continue;
+            }
         }
 
         var wantsGive = target.wantsGiveEnergy();
