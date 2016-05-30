@@ -1,9 +1,9 @@
 var HelperFunctions = require('HelperFunctions');
 
-const CONSTRUCTION_PRIORITY = [
-    STRUCTURE_EXTENSION,
+Constructions.CONSTRUCTION_PRIORITY = [
     STRUCTURE_RAMPART,
     STRUCTURE_WALL,
+    STRUCTURE_EXTENSION,
     STRUCTURE_SPAWN,
     STRUCTURE_ROAD
 ];

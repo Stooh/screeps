@@ -1,3 +1,5 @@
+var Constructions = require('Constructions');
+
 var RoleBuilder = {
     label: 'builder',
     scalableBody: [{part: CARRY, count: 2}, {part: WORK}, {part: MOVE}],
@@ -13,6 +15,16 @@ function choseTargetSite(creep, roomHandler) {
     var targets = roomHandler.cache.myConstructionSitesSafe();
     if(!targets.length)
         return;
+
+    // we chose the highest priority construction sites
+    // TODO cache ? should not happen often in the same room and same tick
+    for(var i = 0; i < Constructions.CONSTRUCTION_PRIORITY; ++i) {
+        var filtered = targets.filter(function(v) {return v.structureType == CONSTRUCTION_PRIORITY[i];});
+        if(filtered.length) {
+            targets = filtered;
+            break;
+        }
+    }
 
     var target = creep.pos.findClosestByRange(targets);
     if(!target)
