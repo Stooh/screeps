@@ -43,7 +43,7 @@ RoleHarvester.runRoom = function(roomHandler) {
 RoleHarvester.run = function(creep, roomHandler) {
     // No target && no spot, we're not needed
     if(!creep.memory.targetSource && roomHandler.ressourceSlots.memory.availableSpots <= 0)
-        this.suicide();
+        creep.suicide();
 
     var target = Game.getObjectById(creep.memory.targetSource);
     if(!target) {
