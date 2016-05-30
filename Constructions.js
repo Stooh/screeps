@@ -21,8 +21,8 @@ Constructions.prototype.buildRoads = function() {
     var room = this.roomHandler.room;
 
     var max = MAX_ROAD_CONSTRUCTON - this.roomHandler.cache.constructionSites().filter(
-        function(v) {v.structureType == STRUCTURE_ROAD}
-    );
+        function(v) {return v.structureType == STRUCTURE_ROAD;}
+    ).length;
 
     if(max <= 0)
         return;
