@@ -31,6 +31,10 @@ var LegacyExtends = {};
     }
 );
 
+RoomPosition.prototype.getDistance = function(other) {
+    return Math.abs(this.x - other.x) + Math.abs(this.y - other.y);
+}
+
 Creep.prototype.usesEnergyTransfer = function() {
     return this.memory.role == 'builder' || this.memory.role == 'upgrader' || this.memory.role == 'harvester';
 }
