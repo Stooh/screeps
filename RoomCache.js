@@ -41,6 +41,7 @@ var caches = [
         return (v.structureType == STRUCTURE_EXTENSION || v.structureType == STRUCTURE_SPAWN) &&
                 v.needsEnergyTransfer();
     });}},
+    {name: 'repairables', runnable: function(room) {return this.myCreeps().concat(this.structs());}},
     {name: 'myCreepsAndStructs', runnable: function(room) {return this.myCreeps().concat(this.myStructs());}},
     {name: 'unsafeMarkTargets', runnable: function(room) {return this.myCreeps().concat(this.myStructs()).concat(this.sources()).concat(this.constructionSites);}},
     {name: 'usesEnergyTransfer', runnable: function(room) {return this.myCreepsAndStructs().filter(function(v) {return v.usesEnergyTransfer();});}},

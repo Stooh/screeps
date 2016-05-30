@@ -34,6 +34,11 @@ const WANTED_POPULATION = {
         max: 20,
         cost: 75,
     },
+
+    repair: {
+        max:5,
+        cost:151,
+    },
 };
 
 /** @param Room room */

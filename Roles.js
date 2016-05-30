@@ -5,7 +5,7 @@ var RoleEnergy = require('RoleEnergy');
 var RoleSpawner = require('RoleSpawner');
 var RoleBuilder = require('RoleBuilder');
 var RoleFighter = require('RoleFighter');
-var RoleNone = {label: 'none', bodyStructs: []};
+var RoleRepair = require('RoleRepair');
 
 
 function generateRoles() {
@@ -18,6 +18,7 @@ function generateRoles() {
         RoleSpawner,
         RoleBuilder,
         RoleFighter,
+        RoleRepair,
     ].forEach(function(r) {
         var role = new Role(r);
         res[role.label] = role;

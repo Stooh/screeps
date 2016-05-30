@@ -36,7 +36,10 @@ RoomPosition.prototype.getDistance = function(other) {
 }
 
 Creep.prototype.usesEnergyTransfer = function() {
-    return this.memory.role == 'builder' || this.memory.role == 'upgrader' || this.memory.role == 'harvester';
+    return this.memory.role == 'builder'
+    || this.memory.role == 'upgrader'
+    || this.memory.role == 'harvester'
+    || this.memory.role == 'repair';
 }
 
 Creep.prototype.wantsGiveEnergy = function() {
