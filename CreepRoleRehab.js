@@ -52,6 +52,7 @@ CreepRoleRehab.prototype.rehabCreep = function(creep) {
     }
 
     if(best) {
+        // TODO : clear memory
         console.log('Creep rehab: ' + creep.name + ' from ' + creep.memory.role + ' to ' + best);
         creep.memory.role = best;
         creep.memory.roleLvl = bestLevel;
