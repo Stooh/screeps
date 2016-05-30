@@ -16,8 +16,8 @@ const WANTED_POPULATION = {
 
     harvester: {
         min: 1,
-        maxSource: 2,
-        cost: 90
+        maxSourceSpot: 1,
+        cost: 90,
     },
 
     energy: {
@@ -40,6 +40,7 @@ const WANTED_POPULATION = {
 /** @param Room room */
 function PopulationManager(roomHandler) {
     this.room = roomHandler.room;
+    this.roomHandler = roomHandler;
     this.roomCache = roomHandler.cache;
     this.populations = roomHandler.populations;
     this.memory = HelperFunctions.createMemory('populationMgr', this.room);
@@ -50,6 +51,7 @@ PopulationManager.prototype.calculateWanted = function() {
         return;
 
     var sourceCount = this.roomCache.sources().length;
+    var sourceSpot = this.roomHandler.ressourceSlots.memory.totalSpots;
 
     var res = {};
 
@@ -59,9 +61,13 @@ PopulationManager.prototype.calculateWanted = function() {
         var min = wanted.min ? wanted.min : 0;
         if(wanted.minSource)
             min += wanted.minSource * sourceCount;
+        if(wanted.minSourceSpot)
+            min += wanted.minSourceSpot * sourceSpot;
         var max = wanted.max ? wanted.max : 0;
         if(wanted.maxSource)
             max += wanted.maxSource * sourceCount;
+        if(wanted.maxSourceSpot)
+            max += wanted.maxSourceSpot * sourceSpot;
         var cost = wanted.cost ? wanted.cost : 100;
 
         res[role] = {min: min, max: max, cost: cost};

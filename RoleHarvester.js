@@ -9,6 +9,7 @@ var RoleHarvester = {
 
 /** @param Room room */
 RoleHarvester.runRoom = function(roomHandler) {
+    var ressourceSlots = roomHandler.ressourceSlots;
     var roomCache = roomHandler.cache;
     var creeps = roomCache.myCreepsHarvester();
 
@@ -18,32 +19,42 @@ RoleHarvester.runRoom = function(roomHandler) {
         return;
     }
 
+    if(ressourceSlots.memory.availableSpots <= 0)
+        return;
+
     for(var i = 0; i < creeps.length; ++i) {
         var creep = creeps[i];
 
+        // give some source to idle creeps
         if(!creep.memory.targetSource) {
-            var r = Math.floor(Math.random()*sources.length);
-            creep.memory.targetSource = sources[r].id;
+            for(var j= 0; j < sources.length; ++j) {
+                var source = sources[j];
+                if(source.memory.availableSpots > 0) {
+                    source.memory.availableSpots --;
+                    creep.memory.targetSource = source.id;
+                    break;
+                }
+            }
         }
     }
 }
 
 /** @param Creep creep */
 RoleHarvester.run = function(creep, roomHandler) {
+    // No target && no spot, we're not needed
+    if(!creep.memory.targetSource && roomHandler.ressourceSlots.memory.availableSpots <= 0)
+        this.suicide();
+
     var target = Game.getObjectById(creep.memory.targetSource);
-    if(!target)
+    if(!target) {
+        delete creep.memory.targetSource;
         return;
+    }
+
     if(creep.pos.isNearTo(target)) {
         creep.harvest(target);
     } else {
         creep.moveTo(target);
-    }
-    if(creep.carry.energy < creep.carryCapacity) {
-        return;
-        var sources = roomHandler.cache.sources();
-        if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
-            creep.moveTo(sources[0]);
-        }
     }
 };
 
