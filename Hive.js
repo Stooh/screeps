@@ -9,6 +9,10 @@ function Hive(roomHandler) {
 
 /** @param Room room */
 Hive.prototype.run = function() {
+    if(!this.room.controller.my)
+        // TODO autorize fighters to act ?
+        return;
+
     var creeps = this.roomCache.myCreeps();
 
     for(var r in ROLES) {
