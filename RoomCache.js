@@ -30,6 +30,7 @@ var caches = [
     {name: 'hostileCreeps', runnable: function(room) {return room.find(FIND_HOSTILE_CREEPS).filter(function(t) {return t.name != 'Source Keeper';});}},
     {name: 'hostileSpawns', runnable: function(room) {return room.find(FIND_HOSTILE_SPAWNS);}},
     {name: 'myStructs', runnable: function(room) {return room.find(FIND_MY_STRUCTURES);}},
+    {name: 'structs', runnable: function(room) {return room.find(FIND_STRUCTURES);}},
     {name: 'mySpawns', runnable: function(room) {return room.find(FIND_MY_SPAWNS);}},
     {name: 'sources', runnable: function(room) {return room.find(FIND_SOURCES);}},
     {name: 'constructionSites', runnable: function(room) {return room.find(FIND_CONSTRUCTION_SITES);}},
