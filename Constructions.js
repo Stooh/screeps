@@ -8,7 +8,7 @@ function Constructions(roomHandler) {
     this.memory = HelperFunctions.createMemory('constructions', roomHandler.room);
 };
 
-const MIN_ROAD_PATH_USE = 5;
+const MIN_ROAD_PATH_USE = 3;
 const MAX_ROAD_CONSTRUCTON = 5;
 
 Constructions.prototype.buildRoads = function() {
