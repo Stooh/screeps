@@ -58,12 +58,12 @@ PopulationManager.prototype.calculateWanted = function() {
     for(var role in WANTED_POPULATION) {
         var wanted = WANTED_POPULATION[role];
 
-        var min = wanted.min ? wanted.min : 0;
+        var min = wanted.min || 0;
         if(wanted.minSource)
             min += wanted.minSource * sourceCount;
         if(wanted.minSourceSpot)
             min += wanted.minSourceSpot * sourceSpot;
-        var max = wanted.max ? wanted.max : 0;
+        var max = wanted.max || 0;
         if(wanted.maxSource)
             max += wanted.maxSource * sourceCount;
         if(wanted.maxSourceSpot)
@@ -99,7 +99,7 @@ PopulationManager.prototype.manage = function() {
         if(actual >= wanted.max)
             continue;
 
-        var needMin = wanted.min > actual;
+        var needMin = (wanted.min > actual);
         // le cout incluant la nouvelle unité produite
         var cost = (actual + 1) * wanted.cost;
 
