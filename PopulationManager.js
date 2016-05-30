@@ -4,8 +4,8 @@ const REFRESH_DELAY = 20;
 
 const WANTED_POPULATION = {
     spawner: {
-        min: 2,
-        max: 2,
+        min: 1,
+        max: 1,
         cost: 1,
     },
 
@@ -22,7 +22,7 @@ const WANTED_POPULATION = {
 
     energy: {
         min:1,
-        max:20,
+        maxSourceSpot:2,
         cost: 60,
     },
 
@@ -32,7 +32,7 @@ const WANTED_POPULATION = {
     },
 
     fighter: {
-        max: 10,
+        max: 20,
         cost: 75,
     },
 };
