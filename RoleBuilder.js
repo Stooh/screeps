@@ -48,7 +48,7 @@ RoleBuilder.run = function(creep, roomHandler) {
     var err = creep.build(target)
     if(err == ERR_NOT_IN_RANGE)
         creep.moveTo(target);
-    else if(err != OK)
+    else if(err != OK && err != ERR_NOT_ENOUGH_ENERGY)
         delete creep.memory.targetBuild;
 };
 
