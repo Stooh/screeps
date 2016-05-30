@@ -155,9 +155,6 @@ Constructions.prototype.generateWalls = function(walls, testedPos, invalidPos, e
             }
         }
     }
-
-    if(!rampartFound && walls.length)
-        walls[0].rampart = true;
 };
 
 function isRampart(room, x,y) {
