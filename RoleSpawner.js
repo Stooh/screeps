@@ -1,8 +1,6 @@
 var RoleSpawner = {
     label: 'spawner',
-    bodyStructs: [
-        {work:1, carry:1, move:1}
-    ],
+    scalableBody: [{part: WORK}, {part: CARRY}, {part: MOVE}],
 };
 
 /** @param Creep creep */
