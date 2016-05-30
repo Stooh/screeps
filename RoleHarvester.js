@@ -1,10 +1,6 @@
 var RoleHarvester = {
     label: 'harvester',
-    bodyStructs: [
-        {work:2, carry:1, move:1},
-        {work:3, carry:6, move:1},
-        {work:6, carry:9, move:1}
-    ],
+    scalableBody: [{part: MOVE, count: 0}, {part: CARRY, count:3}, {part: WORK, count: 1}],
 };
 
 /** @param Room room */

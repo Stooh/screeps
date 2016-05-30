@@ -18,12 +18,7 @@ const FILTER_POSITIVE_ENERGY_SCORE = function(v) {return v.memory.energyScore > 
 
 var RoleEnergy = {
     label: ROLE_ENERGY,
-    bodyStructs: [
-        {carry:2, move:2},
-        {carry:5, move:5},
-        {carry:10, move:10},
-        {carry:25, move:25}
-    ],
+    scalableBody: [{part: MOVE}, {part: CARRY}],
 };
 
 /** @param Room room */
