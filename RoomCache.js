@@ -35,7 +35,11 @@ var caches = [
     {name: 'sources', runnable: function(room) {return room.find(FIND_SOURCES);}},
     {name: 'constructionSites', runnable: function(room) {return room.find(FIND_CONSTRUCTION_SITES);}},
     {name: 'activeSources', runnable: function(room) {return room.find(FIND_SOURCES_ACTIVE);}},
-    {name: 'mySpawnExt', runnable: function(room) {return this.myStructs().filter(function(v) {return v.structureType == STRUCTURE_EXTENSION;});}},
+    {name: 'mySpawnExts', runnable: function(room) {return this.myStructs().filter(function(v) {return v.structureType == STRUCTURE_EXTENSION;});}},
+    {name: 'mySpawnsEnergy', runnable: function(room) {return this.myStructs().filter(function(v) {
+        return (v.structureType == STRUCTURE_EXTENSION || v.structureType == STRUCTURE_SPAWN) &&
+                v.needsEnergyTransfer();
+    });}},
     {name: 'myCreepsAndStructs', runnable: function(room) {return this.myCreeps().concat(this.myStructs());}},
     {name: 'unsafeMarkTargets', runnable: function(room) {return this.myCreeps().concat(this.myStructs()).concat(this.sources()).concat(this.constructionSites);}},
     {name: 'usesEnergyTransfer', runnable: function(room) {return this.myCreepsAndStructs().filter(function(v) {return v.usesEnergyTransfer();});}},
