@@ -4,9 +4,9 @@ const ROLES = require('Roles');
 function CreepFactory(roomHandler) {
     this.roomHandler = roomHandler;
     this.room = roomHandler.room;
-}
+};
 
-function getBodyFromRole(roleName) {
+CreepFactory.prototype.getBodyFromRole = function(roleName) {
     var role = ROLES[roleName];
 
     if(!role) {
@@ -14,14 +14,27 @@ function getBodyFromRole(roleName) {
         return undefined;
     }
 
-    // for now only level 1
+    // we chose level from the number of available extensions
+    var maxCost = 300 + 50 * this.roomHandler.cache.mySpawnExt().length;
+    // TODO use energy input too ?
+
+    // we ask for the highest level we can get depending on our number of extension
+    for(var i = role.bodies.length-1; i>=0; --i) {
+        var bodyInfo = role.bodies[i];
+
+        if(bodyInfo.cost <= maxCost)
+            return bodyInfo.body;
+    }
+
+    // fallback on body 0
+    console.log('fallback body 0 : ' + roleName + '(cost: ' + role.bodies[0] + ', vs ' + maxCost + ')');
     return role.bodies[0].body;
 }
 
 CreepFactory.prototype.createCreep = function(role, count) {
 	count = count || 1;
     var spawns = this.room.find(FIND_MY_SPAWNS);
-    var body = getBodyFromRole(role);
+    var body = this.getBodyFromRole(role);
 
     for(var c = 0; c < count; ++c) {
         var created = false;
