@@ -18,7 +18,7 @@ RoleSpawner.run = function(creep, roomHandler) {
             creep.moveTo(target);
         }
     } else {
-        var target = creep.pos.findClosestByRange(roomCache.mySpawns());
+        var target = creep.pos.findClosestByRange(roomCache.mySpawnsEnergy());
         if(creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
             creep.moveTo(target);
         }
