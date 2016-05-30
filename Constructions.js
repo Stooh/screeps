@@ -8,6 +8,9 @@ function Constructions(roomHandler) {
     this.memory = HelperFunctions.createMemory('constructions', roomHandler.room);
 };
 
+const MIN_ROAD_PATH_USE = 5;
+const MAX_ROAD_CONSTRUCTON = 5;
+
 Constructions.prototype.buildRoads = function() {
     var pathUse = this.memory.pathUse;
     this.memory.pathUse = {};
@@ -16,13 +19,24 @@ Constructions.prototype.buildRoads = function() {
         return;
 
     var room = this.roomHandler.room;
-    var minPathUse = 2;
+
+    var max = MAX_ROAD_CONSTRUCTON - this.roomHandler.cache.constructionSites().filter(
+        function(v) {v.structureType == STRUCTURE_ROAD}
+    );
+
+    if(max <= 0)
+        return;
+
     for(var pos in pathUse) {
-        if(pathUse[pos] >= minPathUse) {
+        if(pathUse[pos] >= MIN_ROAD_PATH_USE) {
             var p = HelperFunctions.intToPos(pos);
             if(!canBuildRoad(room, p))
                 continue;
             room.createConstructionSite(p.x, p.y, STRUCTURE_ROAD);
+
+            max--;
+            if(max <= 0)
+                return;
         }
     }
 }
@@ -41,7 +55,8 @@ function canBuildRoad(room, p) {
 
 Constructions.prototype.updatePathUse = function() {
     var pathUse = this.memory.pathUse;
-    var creeps = this.roomHandler.cache.myCreeps();
+    // we only take into account energy creeps because they move a lot
+    var creeps = this.roomHandler.cache.myCreepsEnergy();
     for(var i = 0; i < creeps.length; ++i) {
         var creep = creeps[i];
 
@@ -52,11 +67,10 @@ Constructions.prototype.updatePathUse = function() {
 }
 
 Constructions.prototype.run = function() {
-    if(HelperFunctions.outdated(this, ROAD_DELAY)) {
+    if(HelperFunctions.outdated(this, ROAD_DELAY))
         this.buildRoads();
-    } else {
-        this.updatePathUse();
-    }
+
+    this.updatePathUse();
 };
 
 module.exports = Constructions;
