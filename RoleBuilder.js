@@ -10,7 +10,7 @@ function getTarget(creep) {
 
 function choseTargetSite(creep, roomHandler) {
     // choose a new target
-    var targets = roomHandler.cache.constructionSitesSafe();
+    var targets = roomHandler.cache.myConstructionSitesSafe();
     if(!targets.length)
         return;
 

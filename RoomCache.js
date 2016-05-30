@@ -33,6 +33,7 @@ var caches = [
     {name: 'structs', runnable: function(room) {return room.find(FIND_STRUCTURES);}},
     {name: 'mySpawns', runnable: function(room) {return room.find(FIND_MY_SPAWNS);}},
     {name: 'sources', runnable: function(room) {return room.find(FIND_SOURCES);}},
+    {name: 'myConstructionSites', runnable: function(room) {return room.find(FIND_MY_CONSTRUCTION_SITES);}},
     {name: 'constructionSites', runnable: function(room) {return room.find(FIND_CONSTRUCTION_SITES);}},
     {name: 'activeSources', runnable: function(room) {return room.find(FIND_SOURCES_ACTIVE);}},
     {name: 'mySpawnExts', runnable: function(room) {return this.myStructs().filter(function(v) {return v.structureType == STRUCTURE_EXTENSION;});}},
