@@ -21,7 +21,6 @@ const WANTED_POPULATION = {
     },
 
     energy: {
-        min:1,
         maxSourceSpot:2,
         cost: 60,
     },
