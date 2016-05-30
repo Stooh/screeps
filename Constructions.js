@@ -61,6 +61,14 @@ Constructions.prototype.updatePathUse = function() {
         var creep = creeps[i];
 
         var p = HelperFunctions.posToInt(creep.pos);
+
+        // we dont want to count creeps that doesnt move
+        var last = creep.memory.lastPos;
+        creep.memory.lastPos = p;
+
+        if(!last || last == p)
+            continue;
+
         var old = pathUse[p];
         pathUse[p] = old ? (old + 1) : 1;
     }
