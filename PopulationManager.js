@@ -16,6 +16,7 @@ const WANTED_POPULATION = {
 
     harvester: {
         min: 1,
+        maxSource: -1, // we want to leave one spot open
         maxSourceSpot: 1,
         cost: 90,
     },
