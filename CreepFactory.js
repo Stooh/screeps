@@ -21,7 +21,7 @@ CreepFactory.prototype.getBodyFromRole = function(roleName) {
     } else {
         // we chose level from the number of available extensions
         // TODO use energy input too ?
-        var maxCost = SPAWN_ENERGY_CAPACITY + EXTENSION_ENERGY_CAPACITY[this.room.controller.level] * this.roomHandler.cache.mySpawnExts().length;
+        maxCost = SPAWN_ENERGY_CAPACITY + EXTENSION_ENERGY_CAPACITY[this.room.controller.level] * this.roomHandler.cache.mySpawnExts().length;
     }
 
     // we ask for the highest level we can get depending on our number of extension
