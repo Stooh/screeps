@@ -26,7 +26,7 @@ function getTargetScore(creep, target) {
         return 0;
 
     // distance
-    var score = DISTANCE_SCORE * creep.pos.getDistance(target.pos);
+    var score = DISTANCE_SCORE * (1000 - creep.pos.getDistance(target.pos));
 
     // structureType
     var order = Constructions.CONSTRUCTION_PRIORITY;

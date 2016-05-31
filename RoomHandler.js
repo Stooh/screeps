@@ -23,21 +23,23 @@ function RoomHandler(room) {
 RoomHandler.prototype.run = function() {
     this.cache.clear();
 
-    this.creepRoleRehab.run();
+    if(this.room && this.room.controller && this.room.controller.my) {
+        this.creepRoleRehab.run();
 
-    this.ressourceSlots.run();
+        this.ressourceSlots.run();
 
-    this.populations.update();
+        this.populations.update();
 
-    var toBuild = this.populationMgr.manage();
+        var toBuild = this.populationMgr.manage();
 
-    for(var n in toBuild) {
-        this.creepFactory.createCreep(n, toBuild[n]);
+        for(var n in toBuild) {
+            this.creepFactory.createCreep(n, toBuild[n]);
+        }
+
+        this.hive.run();
+
+        this.constructions.run();
     }
-
-    this.hive.run();
-
-    this.constructions.run();
 }
 
 module.exports = RoomHandler;
