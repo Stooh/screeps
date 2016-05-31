@@ -7,16 +7,21 @@ var RoleRepair = {
 
 const KEEP_REPEARING_TIME = 20;
 const PRIORITY_SCORE = 10000;
-const DISTANCE_SCORE = 100;
+const DISTANCE_SCORE = 10;
 const HEALTH_SCORE = 1;
-const HEALTH_BASE_SCORE = 10000000;
+const HEALTH_BASE_SCORE = 300000000;
 
 function getTarget(creep) {
     var tId = creep.memory.targetRepair;
     return tId ? Game.getObjectById(tId) : undefined;
 }
 
-function targetScore(creep, target) {
+function clearTarget(creep) {
+    delete creep.memory.targetRepair;
+    delete creep.memory.targetRepairStartTime;
+}
+
+function getTargetScore(creep, target) {
     if(target.hits >= target.hitsMax)
         return 0;
 
@@ -76,14 +81,13 @@ RoleRepair.run = function(creep, roomHandler) {
     var err = creep.repair(target)
     if(err == ERR_NOT_IN_RANGE)
         creep.moveTo(target);
-    else if(err != OK) {
-        delete creep.memory.targetRepair;
-        delete creep.memory.targetRepairStartTime;
-    } else if(!creep.memory.targetRepairStartTime)
-        creep.memory.targetRepairStartTime = Game.time; // init start repair time
-    else if(Game.time - creep.memory.targetRepairStartTime > KEEP_REPEARING_TIME) {
-        delete creep.memory.targetRepair;
-        delete creep.memory.targetRepairStartTime;
+    else if(creep.memory.targetRepairStartTime && Game.time - creep.memory.targetRepairStartTime > KEEP_REPEARING_TIME) {
+        clearTarget(creep);
+    } else if(err == OK) {
+        if(!creep.memory.targetRepairStartTime)
+            creep.memory.targetRepairStartTime = Game.time; // init start repair time
+    } else if(err != ERR_NOT_ENOUGH_ENERGY) {
+        clearTarget(creep);
     }
 };
 
